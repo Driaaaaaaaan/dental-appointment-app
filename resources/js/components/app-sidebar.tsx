@@ -24,12 +24,12 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Patients',
-        href: dashboard(),
+        href: '/patients',
         icon: User,
     },
     {
         title: 'Appointments',
-        href: dashboard(),
+        href: '/appointments',
         icon: ClipboardCheck,
     },
 ];

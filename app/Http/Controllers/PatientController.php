@@ -10,4 +10,9 @@ class PatientController extends Controller
     {
         return inertia('Patients/Index');
     }
+
+    public function create()
+    {
+        return inertia('Patients/Create');
+    }
 }

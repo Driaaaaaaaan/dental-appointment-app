@@ -16,6 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('patients', [\App\Http\Controllers\PatientController::class, 'index'])->name('patients.index');
+    Route::get('patients/create', [\App\Http\Controllers\PatientController::class, 'create'])->name('patients.create');
 });
 
 require __DIR__.'/settings.php';
