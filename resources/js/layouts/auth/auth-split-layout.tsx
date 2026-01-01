@@ -26,7 +26,7 @@ export default function AuthSplitLayout({
                 >
                     <AppLogoIcon className="mr-2 size-8 fill-current text-white" />
                     <div className='text-white'>
-                        CJ Dental Clinic
+                        {name}
                     </div>
                 </Link>
                 

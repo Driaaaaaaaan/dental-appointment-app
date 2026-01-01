@@ -87,6 +87,23 @@ export default function Index() {
                                 <Label htmlFor="Lname">Last Name</Label>
                                 <Input placeholder='Input your last name...'></Input>
                             </div>
+                            <div className='mb-4'>
+                                <Label htmlFor="Suffix">Suffix</Label>
+                                <Select>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Enter suffix" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value=" ">None</SelectItem>
+                                        <SelectItem value="Jr.">Jr.</SelectItem>
+                                        <SelectItem value="Jra.">Jra.</SelectItem>
+                                        <SelectItem value="Sr.">Sr.</SelectItem>
+                                        <SelectItem value="III">III</SelectItem>
+                                        <SelectItem value="IV">IV</SelectItem>
+                                        <SelectItem value="V">V</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
                             <div className="mb-4">
                                 <Label htmlFor="date">Birth Date</Label>
                                 <div className="relative flex gap-2">
@@ -233,9 +250,6 @@ export default function Index() {
         </SelectContent>
     </Select>
 </div>
-
-                            
-
                             <div className='mb-4'>
                                 <Label htmlFor="Gender">Gender</Label>
                                 <Select>
