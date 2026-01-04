@@ -24,6 +24,7 @@ import provinces from "@/data/province.json"
 import cities from "@/data/city.json"
 import barangays from "@/data/barangay.json"
 import { useState } from "react"
+import { useForm } from '@inertiajs/react'
 
 
 
@@ -43,6 +44,23 @@ function isValidDate(date: Date | undefined) {
     }
     return !isNaN(date.getTime())
     }
+
+    function calculateAge(birthDate: Date | undefined) {
+    if (!birthDate) return ""
+
+    const today = new Date()
+    let age = today.getFullYear() - birthDate.getFullYear()
+    const monthDiff = today.getMonth() - birthDate.getMonth()
+
+    if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+        age--
+    }
+
+    return age
+}
 
 
 
@@ -67,6 +85,25 @@ export default function Index() {
     const [cityCode, setCityCode] = useState("")
     const [barangayCode, setBarangayCode] = useState("")
 
+    const age = calculateAge(date)
+
+
+
+    const { data, setData, post, processing, errors } = useForm({
+    Fname: '',
+    Mname: '',
+    Lname: '',
+    Suffix: '',
+    Bday: '',
+    Contact: '',
+    Province: '',
+    Municipality: '',
+    Brgy: '',
+    email: '',
+    password: '',
+    remember: false,
+})
+
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -77,19 +114,19 @@ export default function Index() {
                         <div>
                             <div className='mb-4'>
                                 <Label htmlFor="Fname">First Name</Label>
-                                <Input placeholder='Input your first name...'></Input>
+                                <Input placeholder='Input your first name...' value={data.Fname} onChange={(e) => setData('Fname', e.target.value)}></Input>
                             </div>
                             <div className='mb-4'>
                                 <Label htmlFor="Mname">Middle Name</Label>
-                                <Input placeholder='Input your middle name...'></Input>
+                                <Input placeholder='Input your middle name...' value={data.Mname} onChange={(e) => setData('Mname', e.target.value)}></Input>
                             </div>
                             <div className='mb-4'>
                                 <Label htmlFor="Lname">Last Name</Label>
-                                <Input placeholder='Input your last name...'></Input>
+                                <Input placeholder='Input your last name...' value={data.Lname} onChange={(e) => setData('Lname', e.target.value)}></Input>
                             </div>
                             <div className='mb-4'>
                                 <Label htmlFor="Suffix">Suffix</Label>
-                                <Select>
+                                <Select value={data.Suffix} onValueChange={(value) => setData('Suffix', value)}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Enter suffix" />
                                     </SelectTrigger>
@@ -105,11 +142,12 @@ export default function Index() {
                                 </Select>
                             </div>
                             <div className="mb-4">
-                                <Label htmlFor="date">Birth Date</Label>
+                                <Label htmlFor="Bday">Birth Date</Label>
                                 <div className="relative flex gap-2">
                                     <Input
                                         id="date"
-                                        value={value}
+                                        value={data.Bday}
+                                        onValueChange={(value) => setData('Bday', value)}
                                         placeholder="Enter you birth date..."
                                         className="bg-background pr-10"
                                         onChange={(e) => {
@@ -165,24 +203,29 @@ export default function Index() {
                         <div>
                             <div className='mb-4'>
                                 <Label htmlFor="Contact">Contact Number</Label>
-                                <Input placeholder='Input your contact number...'></Input>
+                                <Input placeholder='Input your contact number...' value={data.Contact} onChange={(e) => setData('Contact', e.target.value)}></Input>
                             </div>
                             <div className='mb-4'>
                                 <Label htmlFor="email">Email</Label>
-                                <Input placeholder='Input your email address...'></Input>
+                                <Input placeholder='Input your email address...' value={data.email} onChange={(e) => setData('email', e.target.value)}></Input>
                             </div>
                             <div className='mb-4'>
                                 <Label htmlFor="password">Password</Label>
-                                <Input placeholder='Input your password...'></Input>
+                                <Input placeholder='Input your password...' value={data.password} onChange={(e) => setData('password', e.target.value)}></Input>
                             </div>
                             <div className='mb-4'>
                                 <Label htmlFor="Age">Age</Label>
-                                <Input></Input>
-                            </div>
+                                <Input
+                                value={age}
+                                readOnly
+                                disabled
+                                className="bg-muted cursor-not-allowed"
+                                    /></div>
+
                         </div>
                         <div>
                             <div className="mb-4">
-    <Label>Province</Label>
+    <Label htmlFor="Province">Province</Label>
     <Select
         value={provinceCode}
         onValueChange={(value) => {
@@ -206,7 +249,7 @@ export default function Index() {
                             
 
                             <div className="mb-4">
-    <Label>Municipality / City</Label>
+    <Label htmlFor="Municipality">Municipality / City</Label>
     <Select
         value={cityCode}
         onValueChange={(value) => {
@@ -230,7 +273,7 @@ export default function Index() {
     </Select>
 </div>
 <div className="mb-4">
-    <Label>Barangay</Label>
+    <Label htmlFor="Brgy">Barangay</Label>
     <Select
         value={barangayCode}
         onValueChange={setBarangayCode}
